@@ -1,7 +1,7 @@
 import java.util.Vector;
 class App {
 	public static void main(String[] args) {
-		int n=127;
+		int n=-12;
 		Binary obj = new Binary(n);
 		System.out.println(new Binary(n).toString()+"\n"+obj.twosComplement().toString());
 	}
@@ -17,6 +17,7 @@ class Binary {
 	void buildBinary(){
 		for(int i=0;i<Math.floor(Math.log(Math.abs(num))/Math.log(2))+1;i++)
 			binary.add(((num>>>i)&1)==1);
+		if(num<0) binary.add(true);
 	}
 	Binary twosComplement(){
 		int com=~num;
