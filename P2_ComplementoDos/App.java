@@ -15,7 +15,7 @@ class App {
 		InputStreamReader isr = new InputStreamReader (System.in);
 		BufferedReader br = new BufferedReader (isr);
 		int n;
-		System.out.println("Escribe el número en base 10 para obtener su complemento a dos:");
+		System.out.println("Escribe el numero en base 10 para obtener su complemento a dos:");
 
 		try{
 			n=Integer.parseInt(br.readLine ());
