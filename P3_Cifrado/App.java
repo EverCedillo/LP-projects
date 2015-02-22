@@ -55,12 +55,15 @@ class Encryption{
 	*void encrypt()
 	*Método que cifra el contenido del String info, asignando las letras de la llave relacionadas con el alfabeto original.
 	*Si info contiene espacios, se eliminan.
+	*Si info contiene caracteres fuera de ALPHABET se ignoran y se pierden en el cifrado
 	*El String info se maneja en mayúsculas y de esa forma se sustituyen los nuevos carácteres.
 	*/
 	void encrypt(){
 		String infoNoSpaces=info.toUpperCase().replace(" ","");
 		for(int i=0; i<infoNoSpaces.length();i++)
-			infoEncrypt+=key[Arrays.asList(ALPHABET).indexOf(String.valueOf(infoNoSpaces.charAt(i)))];
+			try{
+				infoEncrypt+=key[Arrays.asList(ALPHABET).indexOf(String.valueOf(infoNoSpaces.charAt(i)))];}
+			catch (ArrayIndexOutOfBoundsException e){}
 	}
 	/*
 	*public String toString()
