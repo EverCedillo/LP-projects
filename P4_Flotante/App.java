@@ -26,13 +26,13 @@ class FloatBinary {
 		buildBinary();
 	}
 	void buildBinary(){
-		long integ = (long)num;
+		long integ = (long)Math.abs(num);
 		long index = (long)Math.floor(Math.log(Math.abs(integ))/Math.log(2));
 		float frac = num - integ;
 		for(int i=0;i<index+1;i++)
-			binary.add(((integ)>>(i)&1)==1);
+			binary.add(((integ>>i)&1)==1);
 		for(int i=0;i<8;i++)
-			binary.add(((index+127)>>(i)&1)==1);
+			binary.add((((index+127)>>i)&1)==1);
 		binary.add(num<0);
 	}
 	public String toString(){
