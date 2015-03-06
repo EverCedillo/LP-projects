@@ -13,8 +13,9 @@ class App {
 			data=0;
 		}
 		fb = new FloatBinary(data);
-		fb2 = new FloatBinary("");
+		fb2 = new FloatBinary("01000001100111100010000000000000");
 		System.out.println(fb.toString());
+		System.out.println(fb2.toString());
 	}
 }
 /*
@@ -27,17 +28,19 @@ class FloatBinary {
 	*List<Boolean> binary, lista de booleanos que representan los bits del número flotante donde los valores True representan 1 y los False 0
 	*/
 	float num;
-	List<Boolean> binary=new ArrayList<Boolean>();
+	List<Boolean> binary;
 	/*
 	*Constructor
 	*Recibe:
 	*float num, numero a representar en bits
 	*/
 	FloatBinary(float num){
+		binary = new ArrayList<Boolean>();
 		this.num=num;
 		buildBinary();
 	}
 	FloatBinary(String bin){
+		binary =new ArrayList<Boolean>();
 		buildList(bin);
 		buildFloat();
 	}
@@ -53,15 +56,15 @@ class FloatBinary {
 	private void buildBinary(){
 		List<Float> tmp = new ArrayList<Float>();
 		long integ = (long)Math.abs(num);
-		long index = (long)Math.floor(Math.log(Math.abs(integ))/Math.log(2));
+		long exponent = (long)Math.floor(Math.log(Math.abs(integ))/Math.log(2));
 		float el = num - integ;
 		//Sign bit
 		binary.add(num<0);
-		//Binary index
+		//Binary exponent
 		for(int i=7;i>=0;i--)
-			binary.add((((index+127)>>i)&1)==1);
+			binary.add((((exponent+127)>>i)&1)==1);
 		//Binary integer
-		for(long i=index-1;i>=0&&binary.size()<32;i--)
+		for(long i=exponent-1;i>=0&&binary.size()<32;i--)
 			binary.add(((integ>>i)&1)==1);
 		//Binary fraction
 		while(binary.size()<32&&tmp.indexOf(el)==-1){
@@ -74,15 +77,20 @@ class FloatBinary {
 			binary.add(false);
 	}
 	private void buildFloat(){
-		int index = 0;
-		//for(int i=2;i<8;i++)
-			index = index<<1;
-		System.out.println(index);
+		int exponent=0;
+		num=1;
+		for(int i=1;i<9;i++)
+			exponent+=binary.get(i)?Math.pow(2,9-i-1):0;
+		for(int i=9;i<32;i++)
+			num+=binary.get(i)?1/Math.pow(2,i-8):0;
+		num*=Math.pow(2,exponent-127)*(binary.get(0)?-1:1);
+		
 	}
 	private void buildList(String bin){
+		System.out.println(bin.length());
 		for(int i=0;i<bin.length();i++)
 			binary.add(bin.charAt(i)=='1');
-		
+			
 	}
 
 	/*public String toString()
