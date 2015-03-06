@@ -4,18 +4,38 @@ class App {
 	public static void main(String[] args) {
 		InputStreamReader isr = new InputStreamReader (System.in);
 		BufferedReader br = new BufferedReader (isr);
-		float data;
+		String data;
+		int op;
 		FloatBinary fb,fb2;
-		System.out.println("Escribe el numero");
+		System.out.println("Qué deseas hacer?\n1.Float a binario \n2.Binario a float");
 		try{
-			data=Float.parseFloat(br.readLine ());
+			op=Integer.parseInt(br.readLine ());
 		}catch (IOException e){
-			data=0;
+			op=0;
 		}
-		fb = new FloatBinary(data);
-		fb2 = new FloatBinary("01000001100111100010000000000000");
-		System.out.println(fb.toString());
-		System.out.println(fb2.toString());
+
+		System.out.println("Escribe el numero:");
+		try{
+			data=br.readLine ();
+		}catch (IOException e){
+			data="";
+		}
+		if(op==1){
+			fb = new FloatBinary(Float.parseFloat(data));
+			System.out.println(fb.toString());
+		}else if (op==2) {
+			if (data.length()!=32) {
+				System.out.println("Cadena mal construida, 32 bits necesarios");
+
+			}else
+			{
+				fb = new FloatBinary(data);
+				System.out.println(fb.toString());}
+		}
+		
+	
+		
+		
 	}
 }
 /*
@@ -88,7 +108,6 @@ class FloatBinary {
 		
 	}
 	private void buildList(String bin){
-		System.out.println(bin.length());
 		for(int i=0;i<bin.length();i++)
 			binary.add(bin.charAt(i)=='1');
 			
