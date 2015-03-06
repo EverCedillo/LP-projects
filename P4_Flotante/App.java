@@ -5,7 +5,7 @@ class App {
 		InputStreamReader isr = new InputStreamReader (System.in);
 		BufferedReader br = new BufferedReader (isr);
 		float data;
-		FloatBinary fb;
+		FloatBinary fb,fb2;
 		System.out.println("Escribe el numero");
 		try{
 			data=Float.parseFloat(br.readLine ());
@@ -13,6 +13,7 @@ class App {
 			data=0;
 		}
 		fb = new FloatBinary(data);
+		fb2 = new FloatBinary("");
 		System.out.println(fb.toString());
 	}
 }
@@ -36,6 +37,10 @@ class FloatBinary {
 		this.num=num;
 		buildBinary();
 	}
+	FloatBinary(String bin){
+		buildList(bin);
+		buildFloat();
+	}
 	/*
 	*void buildBinary()
 	*Método que construye la representación en bits de num, divido en tres partes, exponente, parte entera y parte fraccionaria.
@@ -56,7 +61,7 @@ class FloatBinary {
 		for(int i=7;i>=0;i--)
 			binary.add((((index+127)>>i)&1)==1);
 		//Binary integer
-		for(long i=index;i>=0&&binary.size()<32;i--)
+		for(long i=index-1;i>=0&&binary.size()<32;i--)
 			binary.add(((integ>>i)&1)==1);
 		//Binary fraction
 		while(binary.size()<32&&tmp.indexOf(el)==-1){
@@ -68,6 +73,17 @@ class FloatBinary {
 		for(int i=0;i<32-binary.size();i++)
 			binary.add(false);
 	}
+	private void buildFloat(){
+		int index = 0;
+		//for(int i=2;i<8;i++)
+			index = index<<1;
+		System.out.println(index);
+	}
+	private void buildList(String bin){
+		for(int i=0;i<bin.length();i++)
+			binary.add(bin.charAt(i)=='1');
+		
+	}
 
 	/*public String toString()
 	*Genera la representación en cadena de texto del objeto FloatBinary
@@ -77,6 +93,7 @@ class FloatBinary {
 	*/
 	public String toString(){
 		String str="";
+		str="num: "+num+"\n";
 		for(int i=0;i<binary.size();i++)
 			str=str+""+(binary.get(i)?1:0);
 		return str;
