@@ -73,7 +73,8 @@ class FloatBinary {
 			binary.add(Math.abs(el)>=1);
 			el=el- (long)el;
 		}
-		for(int i=0;i<32-binary.size();i++)
+		int aux = binary.size();
+		for(int i=0;i<32-aux;i++)
 			binary.add(false);
 	}
 	private void buildFloat(){
