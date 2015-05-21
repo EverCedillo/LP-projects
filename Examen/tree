@@ -1,4 +1,5 @@
 #lang racket
+
 ;Construye un nodo de arbol con su contenido y sus dos hijos
 (define (make-node data left right)(list data left right))
 ;Devuelve el hijo izquierdo de un nodo
@@ -45,6 +46,13 @@
     ((= d (data-node t)) #t)
     ((< d (data-node t))(member-tree? (left-node t) d))
     ((> d (data-node t))(member-tree? (right-node t) d))))
+;Subtree
+(define (sub-tree t d)
+    (cond
+    ((empty-tree? t) '())
+    ((= d (data-node t)) t)
+    ((< d (data-node t))(sub-tree (left-node t) d))
+    ((> d (data-node t))(sub-tree (right-node t) d))))
 ;Devuelve un árbol, t con la añadidura de lo datos en la lista l
 (define (insert-list-to-tree l t)
   (if (null? l)
@@ -84,7 +92,6 @@
 
       
 
-
 ;Árbol de ejemplo  
 (define t(make-tree 4))
 (define t1(insert-tree t 3))
@@ -92,3 +99,6 @@
 (define t3(insert-tree t2 7))
 (define t4(insert-list-to-tree (list 1 2 3 4 5 1 0 212 34 12 55 33 234 11 723) '()))
 (define t5(mirror-tree t4))
+(define t6(insert-list-to-tree (list 8 3 10 1 6 4 7 14 13) '()))
+
+;Check-expect's
