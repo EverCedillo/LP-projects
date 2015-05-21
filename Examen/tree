@@ -2,7 +2,7 @@
 (define (make-node data left right)(list data left right))
 (define (left-node node) (cadr node))
 (define (right-node node) (caddr node))
-(define (data-tree tree) (car tree))
+(define (data-node tree) (car tree))
 
 (define (make-tree data) (make-node data '() '() ))
 (define (empty-tree? t) (or (empty? t) (null? t)))
@@ -12,12 +12,12 @@
   (if (empty-tree? t)
       '()
       (append (inorder-tree (left-node t))
-              (list(data-tree t))
+              (list(data-node t))
               (inorder-tree (right-node t)))))
 (define (preorder-tree t)
   (if (empty-tree? t)
       '()
-      (append (list(data-tree t))
+      (append (list(data-node t))
               (preorder-tree (left-node t))
               (preorder-tree (right-node t)))))
 (define (postorder-tree t)
@@ -25,9 +25,15 @@
       '()
       (append (postorder-tree (left-node t))
               (postorder-tree (right-node t))
-              (list(data-tree t)))))
+              (list(data-node t)))))
 
 
 (define t(make-tree 4))
 
-
+(define (insert-tree t d)
+  (cond
+    ((empty-tree? t) (make-node d '() '()))
+    ((< d (data-node t))(make-node (data-node t)(insert-tree (left-node t) d)(right-node t)))
+    ((> d (data-node t))(make-node (data-node t)(left-node t)(insert-tree (right-node t) d)))
+    ((= d (data-node t)) t)))
+    
