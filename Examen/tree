@@ -1,0 +1,33 @@
+#lang racket
+(define (make-node data left right)(list data left right))
+(define (left-node node) (cadr node))
+(define (right-node node) (caddr node))
+(define (data-tree tree) (car tree))
+
+(define (make-tree data) (make-node data '() '() ))
+(define (empty-tree? t) (or (empty? t) (null? t)))
+
+
+(define (inorder-tree t)
+  (if (empty-tree? t)
+      '()
+      (append (inorder-tree (left-node t))
+              (list(data-tree t))
+              (inorder-tree (right-node t)))))
+(define (preorder-tree t)
+  (if (empty-tree? t)
+      '()
+      (append (list(data-tree t))
+              (preorder-tree (left-node t))
+              (preorder-tree (right-node t)))))
+(define (postorder-tree t)
+  (if (empty-tree? t)
+      '()
+      (append (postorder-tree (left-node t))
+              (postorder-tree (right-node t))
+              (list(data-tree t)))))
+
+
+(define t(make-tree 4))
+
+
