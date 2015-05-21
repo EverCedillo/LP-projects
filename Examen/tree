@@ -27,13 +27,21 @@
               (postorder-tree (right-node t))
               (list(data-node t)))))
 
-
-(define t(make-tree 4))
-
 (define (insert-tree t d)
   (cond
     ((empty-tree? t) (make-node d '() '()))
     ((< d (data-node t))(make-node (data-node t)(insert-tree (left-node t) d)(right-node t)))
     ((> d (data-node t))(make-node (data-node t)(left-node t)(insert-tree (right-node t) d)))
     ((= d (data-node t)) t)))
+(define (member-tree? t d)
+  (cond
+    ((empty-tree? t) #f)
+    ((= d (data-node t)) #t)
+    ((< d (data-node t))(member-tree? (left-node t) d))
+    ((> d (data-node t))(member-tree? (right-node t) d))))
+
+(define t(make-tree 4))
+(define t1(insert-tree t 3))
+(define t2(insert-tree t1 5))
+(define t3(insert-tree t2 7))
     
