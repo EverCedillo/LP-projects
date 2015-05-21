@@ -39,7 +39,16 @@
     ((= d (data-node t)) #t)
     ((< d (data-node t))(member-tree? (left-node t) d))
     ((> d (data-node t))(member-tree? (right-node t) d))))
+(define (insert-list-to-tree l t)
+  (if (null? l)
+      t
+      (insert-list-to-tree (cdr l) (insert-tree t (car l)))))
+      
+(define (delete-tree t d)(if (member-tree? t d)(insert-list-to-tree (remove d (inorder-tree t)) '())t))
+  
 
+  
+;Árbol de ejemplo  
 (define t(make-tree 4))
 (define t1(insert-tree t 3))
 (define t2(insert-tree t1 5))
