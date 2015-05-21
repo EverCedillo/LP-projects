@@ -69,6 +69,20 @@
 (define (mirror-tree t)
   (insertR-list-to-tree (preorder-tree t) '()))
 
+;Árbol gráfico
+(define (display-tree t)
+  (define (disp t n)
+    (if (empty-tree? t)
+      ""(string-append (b-string n)(number->string(data-node t))"\n"
+                     (disp (left-node t) (+ n 1))
+                     (disp (right-node t)(+ n 1)))))(display (disp t 1))
+  )
+;Auxiliar de construcción de cadena para el árbol gráfico
+(define (b-string n)
+  (if (= 1 n) "├─"
+  (string-append "│ "(b-string (- n 1)))))
+
+      
 
 
 ;Árbol de ejemplo  
