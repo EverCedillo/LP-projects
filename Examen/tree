@@ -41,6 +41,7 @@
                  (list(data-node t)))))
 ;Devuelve un árbol, t con la añadiruda de un dato d
 (check-expect (insert-tree empty-tree 1) '(1 '() '()))
+;
 (define (insert-tree t d)
   (cond
     ((empty-tree? t) (make-node d '() '()))
@@ -49,6 +50,7 @@
     ((= d (data-node t)) t)))
 ;Devuelve #t si un dato d se encuentra en un árbol t; #f de lo contrario
 (check-expect (member-tree? t6 10) #t)
+;
 (define (member-tree? t d)
   (cond
     ((empty-tree? t) #f)
@@ -57,6 +59,7 @@
     ((> d (data-node t))(member-tree? (right-node t) d))))
 ;Subtree
 (check-expect (sub-tree t1 3) empty-tree)
+;
 (define (sub-tree t d)
     (cond
     ((empty-tree? t) '())
@@ -65,15 +68,20 @@
     ((> d (data-node t))(sub-tree (right-node t) d))))
 ;Devuelve un árbol, t con la añadidura de lo datos en la lista l
 (check-expect (insert-list-to-tree '(1) empty-tree) (make-tree 1))
+;
 (define (insert-list-to-tree l t)
   (if (null? l)
       t(insert-list-to-tree (cdr l) (insert-tree t (car l)))))
 ;Devuelve un árbol, t sin el dato d
+(check-expect (delete-tree t1 4) empty-tree)
+;
 (define (delete-tree t d)
   (if (member-tree? t d)
       (insert-list-to-tree (remove d (preorder-tree t)) '())t))
 ;---Lazy mirror---
 ;Inserta elementos con el criterio de orden inverso
+(check-expect (insertR-tree empty-tree 1) '(1 '() '()))
+;
 (define (insertR-tree t d)
   (cond
     ((empty-tree? t) (make-node d '() '()))
@@ -81,10 +89,13 @@
     ((< d (data-node t))(make-node (data-node t)(left-node t)(insertR-tree (right-node t) d)))
     ((= d (data-node t)) t)))
 ;Devuelve un árbol, t con la añadidura de lo datos en la lista l (inverso)
+(check-expect (insert-list-to-tree '(1) empty-tree) (make-tree 1))
+;
 (define (insertR-list-to-tree l t)
   (if (null? l)
       t(insertR-list-to-tree (cdr l) (insertR-tree t (car l)))))  
 ;Devuelve un árbol, espejo del árbol t
+(check-expect (mirror-tree t2) '(4 (5 () ()) (3 () ())))
 (define (mirror-tree t)
   (insertR-list-to-tree (preorder-tree t) '()))
 
