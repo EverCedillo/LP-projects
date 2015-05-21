@@ -1,56 +1,80 @@
 #lang racket
+;Construye un nodo de arbol con su contenido y sus dos hijos
 (define (make-node data left right)(list data left right))
+;Devuelve el hijo izquierdo de un nodo
 (define (left-node node) (cadr node))
+;Devuelve el hijo derecho de un nodo
 (define (right-node node) (caddr node))
-(define (data-node tree) (car tree))
-
+;Dvuelve el dato almacenado en un nodo
+(define (data-node node) (car node))
+;Construye un arbol (nodo-raíz con hijos vaciós)
 (define (make-tree data) (make-node data '() '() ))
+;Devuelve #t si el arbol está vacío #f de lo contrario
 (define (empty-tree? t) (or (empty? t) (null? t)))
-
-
+;Devuelve #t si el nodo es una hoja, #f de lo contrario
+(define (leaf-node? t) (and (empty-tree? (right-node t))(empty-tree? (left-node t))))
+;Devuelve una lista con los datos resultado del recorrido inorder del árbol
 (define (inorder-tree t)
   (if (empty-tree? t)
-      '()
-      (append (inorder-tree (left-node t))
-              (list(data-node t))
-              (inorder-tree (right-node t)))))
+      '()(append (inorder-tree (left-node t))
+                 (list(data-node t))
+                 (inorder-tree (right-node t)))))
+;Devuelve una lista con los datos resultado del recorrido preorder del árbol
 (define (preorder-tree t)
   (if (empty-tree? t)
-      '()
-      (append (list(data-node t))
-              (preorder-tree (left-node t))
-              (preorder-tree (right-node t)))))
+      '()(append (list(data-node t))
+                 (preorder-tree (left-node t))
+                 (preorder-tree (right-node t)))))
+;Devuelve una lista con los datos resultado del recorrido postorder del árbol
 (define (postorder-tree t)
   (if (empty-tree? t)
-      '()
-      (append (postorder-tree (left-node t))
-              (postorder-tree (right-node t))
-              (list(data-node t)))))
-
+      '()(append (postorder-tree (left-node t))
+                 (postorder-tree (right-node t))
+                 (list(data-node t)))))
+;Devuelve un árbol, t con la añadiruda de un dato d
 (define (insert-tree t d)
   (cond
     ((empty-tree? t) (make-node d '() '()))
     ((< d (data-node t))(make-node (data-node t)(insert-tree (left-node t) d)(right-node t)))
     ((> d (data-node t))(make-node (data-node t)(left-node t)(insert-tree (right-node t) d)))
     ((= d (data-node t)) t)))
+;Devuelve #t si un dato d se encuentra en un árbol t; #f de lo contrario
 (define (member-tree? t d)
   (cond
     ((empty-tree? t) #f)
     ((= d (data-node t)) #t)
     ((< d (data-node t))(member-tree? (left-node t) d))
     ((> d (data-node t))(member-tree? (right-node t) d))))
+;Devuelve un árbol, t con la añadidura de lo datos en la lista l
 (define (insert-list-to-tree l t)
   (if (null? l)
-      t
-      (insert-list-to-tree (cdr l) (insert-tree t (car l)))))
-      
-(define (delete-tree t d)(if (member-tree? t d)(insert-list-to-tree (remove d (inorder-tree t)) '())t))
-  
+      t(insert-list-to-tree (cdr l) (insert-tree t (car l)))))
+;Devuelve un árbol, t sin el dato d
+(define (delete-tree t d)
+  (if (member-tree? t d)
+      (insert-list-to-tree (remove d (preorder-tree t)) '())t))
+;---Lazy mirror---
+;Inserta elementos con el criterio de orden inverso
+(define (insertR-tree t d)
+  (cond
+    ((empty-tree? t) (make-node d '() '()))
+    ((> d (data-node t))(make-node (data-node t)(insertR-tree (left-node t) d)(right-node t)))
+    ((< d (data-node t))(make-node (data-node t)(left-node t)(insertR-tree (right-node t) d)))
+    ((= d (data-node t)) t)))
+;Devuelve un árbol, t con la añadidura de lo datos en la lista l (inverso)
+(define (insertR-list-to-tree l t)
+  (if (null? l)
+      t(insertR-list-to-tree (cdr l) (insertR-tree t (car l)))))  
+;Devuelve un árbol, espejo del árbol t
+(define (mirror-tree t)
+  (insertR-list-to-tree (preorder-tree t) '()))
 
-  
+
+
 ;Árbol de ejemplo  
 (define t(make-tree 4))
 (define t1(insert-tree t 3))
 (define t2(insert-tree t1 5))
 (define t3(insert-tree t2 7))
-    
+(define t4(insert-list-to-tree (list 1 2 3 4 5 1 0 212 34 12 55 33 234 11 723) '()))
+(define t5(mirror-tree t4))
