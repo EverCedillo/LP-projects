@@ -21,14 +21,15 @@
 (check-expect (evaluar (make-mul 'x 'y)) "No se puede evaluar")
 ;--------------
 (define (evaluar en)
+  (if (exp-num? en)
    (cond
     ((number? en) en )
     ((sum? en) (+(evaluar (sum-izq en))
                   (evaluar (sum-der en))))
     ((mul? en) (*(evaluar (mul-izq en))
                   (evaluar (mul-der en))))
-    (else "No se puede evaluar")
-    ))
+    ;(else "No se puede evaluar")
+    )"No se puede evaluar"))
 
 ;--------------
 (check-expect (subst 5 'x 2) 5)
@@ -52,4 +53,4 @@
           
 (define e (make-sum (make-mul 2 3) 4))
 (define es (make-sum (make-mul 'x 3) 'x))
-  
+(test)
