@@ -1,0 +1,14 @@
+#include <stdio.h>
+
+void fun(int a);
+
+main(){
+	int a,b,c;
+	a=3;
+	b=&a;
+	fun(b);
+}
+
+void fun(int a){
+	printf("a: %p\n*a: %d\n&a: %d",a,*a,&a);
+}

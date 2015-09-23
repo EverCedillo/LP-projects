@@ -28,7 +28,6 @@
                   (evaluar (sum-der en))))
     ((mul? en) (*(evaluar (mul-izq en))
                   (evaluar (mul-der en))))
-    ;(else "No se puede evaluar")
     )"No se puede evaluar"))
 
 ;--------------

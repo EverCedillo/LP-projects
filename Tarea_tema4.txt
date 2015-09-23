@@ -1,0 +1,18 @@
+﻿	Para cada caracter leído
+	Si es separador
+	si es de apertura
+	ignorar
+	si es de cierre
+	sacar operador de la pila
+	si el operador es unario
+	sacar operando y operar
+	guardar resultado en pila de operandos
+	si es binario
+	sacar dos operandos de la pila
+	operar en el orden requerido
+	guardar resultado en la pila de operandos
+	si es operando
+	meter en la pila de operandos
+	si es operador
+	meter en la pila de operadores
+ores

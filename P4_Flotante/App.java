@@ -107,6 +107,7 @@ class FloatBinary {
 		num*=Math.pow(2,exponent-127)*(binary.get(0)?-1:1);
 		
 	}
+	//Crea la lista de valores booleanos representación de la cadena introducida
 	private void buildList(String bin){
 		for(int i=0;i<bin.length();i++)
 			binary.add(bin.charAt(i)=='1');
