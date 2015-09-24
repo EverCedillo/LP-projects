@@ -1,30 +1,10 @@
-/********************************+
-Analizador léxico
-Programa 1
-Cedillo Martínez Jesús Everard
-García González Brenda
-22-sep-2015
-**********************************/
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "linkedlist.h"
 
-
-
-#define RESERVED_WORD 0
-#define ID 1
-#define SPECIAL_CHARACTER 2
-#define ASSIGNMENT_OPERATOR 3
-#define ARITMETIC_OPERATOR 4
-#define RELATIONAL_OPERATOR 5
-#define INTEGER 6
-#define FLOAT 7
-
 struct Token {
-	int type ;
+	int clase ;
 	char * lexema ;
 	int col ;
 	int line;
@@ -75,21 +55,17 @@ int steps [41][25]={
 	{40,40,40,40,40,40,40,40,40,40,40,40,40,-1,40,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 	};
 int chars_set[]={'i','n','t','f','l','o','a','e','s','b','r','u'};
-int id=0;
-List symbol_table;
-
-void error(char*buffer, int col, int line);
-int cathToken(char*buffer,int status, int col, int line,FILE*file);
+void error(char*buffer, int pos, int line);
+int cathToken(char*buffer,int status, int col, int line);
 int find(char c);
 
 
 int main(int argc, char const *argv[]){
 	/* code */
-	init_list(&symbol_table);
 	char *buffer,c;
 	int status=0,lexic_element,pre_status,char_flag=-1,c_pos=0,c_line=1, error_flag=0;
-	FILE * file =fopen(argv[1],"r");
-	FILE* file_token=fopen("token.tk","w");
+	FILE * file;
+	file =fopen(argv[1],"r");
 	buffer=(char*)malloc(sizeof(char)*2);
 	
 	if(file!=NULL){
@@ -107,27 +83,28 @@ int main(int argc, char const *argv[]){
 			lexic_element=find(c);
 			//printf("%c,status:%d,%d-%s, char_flag:%d\n",c,status,lexic_element,buffer,char_flag);
 			
-			if(lexic_element!=-1)
+			if(lexic_element!=-1){
 				status=steps[status][lexic_element];
+				}
 			else if(c!=EOF){
 				if(!error_flag)
-					error(buffer,c_pos-strlen(buffer),c_line);
-				status=0;
+				error(buffer,c_pos-strlen(buffer),c_line);
+				pre_status=status=0;
 				error_flag=char_flag=1;
 				free(buffer);
-				buffer=(char*)malloc(sizeof(char)*2);
+					buffer=(char*)malloc(sizeof(char)*2);
 			}
 			if(status==-1){
 				//printf("buffer:%s, pre_status: %d, status: %d, char_flag: %d\n",buffer,pre_status,status,char_flag );
 				//scanf("%d",&o);
-				if(cathToken(buffer,pre_status,c_pos-strlen(buffer),c_line,file_token)&&strlen(buffer)==0){
+				if(cathToken(buffer,pre_status,c_pos-strlen(buffer),c_line)&&strlen(buffer)==0){
 					status=pre_status=0;
 					if(!error_flag)
 						error(buffer,c_pos-strlen(buffer),c_line);
 					error_flag=char_flag=1;
 				}
 				else{
-					error_flag=char_flag=status=pre_status=0;				
+					error=flag=char_flag=status=pre_status=0;				
 					//printf("buffer:%s, pre_status: %d, status: %d, char_flag: %d\n",buffer,pre_status,status,char_flag );
 					free(buffer);
 					buffer=(char*)malloc(sizeof(char)*2);
@@ -137,57 +114,22 @@ int main(int argc, char const *argv[]){
 				strcat ( buffer , tmp2 );
 				pre_status=status;
 				char_flag=1;
-				//error_flag=0;
+				error_flag=0;
 			}
 			c_pos=c=='\n'?0:c_pos;
 		}
 	}
-	fclose(file);
-	fclose(file_token);
-	printf("\n/** Tabla de Simbolos **/\n");
-	print(&symbol_table);
+
 	return 0;
 }
+int lex(int state){
 
-
-/************************************
-Función de tratamiento de error,
-sólo ignora el error e imprime donde se localiza 
-y continúa la ejecución del análisis
-
-función error(char*buffer,int col, int line)
-recibe:
-	char*buffer, la cadena de texto que genero el error
-	int col, int line, la línea y columna donde se originó el error
-
-************************************/
-void error(char*buffer,int col, int line){
-	printf("Error en linea: %d col:%d\n",line,col);
 }
-
-/************************************
-Función que recibe candidatos a token, y decide si
-las cadenas de caracteres son token y de qué tipo
-además genera la tabla de símbolos, al identiicar
-token clase IDENTIFICADOR o PALABRA RESERVADA
-
-función int cathToken(char*buffer,int status, int col, int line)
-recibe:
-	char*buffer, la cadena de texto candidata a token
-	int status, el estado del auttómata analizador donde el token se originó
-	int col, int line, la posición del archivo donde se encuentra el candidato a token
-
-devuelve:
-	0 si el candidato a token fue aceptado
-	-1 de no ser aceptado el candidatoa token
-************************************/
-int cathToken(char*buffer,int status, int col, int line, FILE*file){
+void error(int pos, int line){
+	printf("Error en col: %d linea:%d\n",buffer,pos, line);
+}
+int cathToken(char*buffer,int status, int pos, int line){
 	struct Token t;
-	
-	t.lexema = buffer;
-	t.col=col;
-	t.line = line;
-
 	switch(status){
 		case 26: //int
 		case 25: //if
@@ -195,50 +137,30 @@ int cathToken(char*buffer,int status, int col, int line, FILE*file){
 		case 23: //float
 		case 19: //false
 		case 35: //else
-		case 29: //bool
-			t.type = RESERVED_WORD;
-			fprintf(file, "Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-			printf("PALABRA RESERVADA:%d, Tipo:%d, Col:%d, Line: %d\n",id,t.type,t.col,t.line);
-			insert_begin(buffer,id++,&symbol_table);
+		case 27: //bool
+			printf("(%d,%d) %s: Palabra reservadeishon",pos,line,buffer);
 		break;
 		case 6: //ENTERO
-			t.type = INTEGER;
-			fprintf(file, "Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-			printf("Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
+			printf("(%d,%d) %s: ENTERO\n",pos,line,buffer);
 		break;
 		case 36: //REAL
-			t.type = FLOAT;
-			fprintf(file, "Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-			printf("Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
+			printf("(%d,%d) %s: REAL\n",pos,line,buffer);
 		break;
 		case 11: //ARITMETICO
-			t.type = ARITMETIC_OPERATOR;
-			fprintf(file, "Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-			printf("Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
+			printf("(%d,%d) %s: ARITMETICO\n",pos,line,buffer);
 		break;
 		case 12: //ESPECIALES
-			t.type = SPECIAL_CHARACTER;
-			fprintf(file, "Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-			printf("Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
+			printf("(%d,%d) %s: SEPARADORES\n",pos,line,buffer);
 		break;
 		case 40: //ID's
-			t.type = ID;
-			fprintf(file, "Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-			printf("IDENTIFICADOR:%d, Tipo:%d, Col:%d, Line: %d\n",id,t.type,t.col,t.line);
-			insert_begin(buffer,id++,&symbol_table);
-		break;
+			printf("(%d,%d) %s: IDENTIFICADOR\n",pos,line,buffer);
+			break;
 		case 8:
-			t.type = ASSIGNMENT_OPERATOR;
-			fprintf(file, "Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-			printf("Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-		break;
 		case 9:
 		case 10:
 		case 37: //OP RElacionales
-			t.type = RELATIONAL_OPERATOR;
-			fprintf(file, "Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-			printf("Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-		break;
+			printf("(%d,%d) %s: RELACIONALES\n",pos,line,buffer);
+			break;
 		case 15:
 		case 39:
 			//ITNORE
@@ -253,20 +175,6 @@ int cathToken(char*buffer,int status, int col, int line, FILE*file){
 		return 0;
 	}
 }
-
-/************************************
-Función que recibe caracteres que forman elementos léxicos
-y ayuda en la desición del siguiente paso del autómata 
-verificando la posibilidad de transición 
-
-función int find(char c)
-recibe:
-	char c, caracter que provocará un desplazamiento en el autómata analizador
-devuelve:
-	la columna donde se debe buscar el estado siguiente del autómata
-	-1, si el caracter no está definidio en el lenguaje
-
-************************************/
 int find(char c){
 	int i=0;
 	for(i=0;i<12;i++){ //Caracteres que forman las palabras reservadas
