@@ -1,7 +1,7 @@
 /********************************+
 Analizador léxico
 Programa 1
-Cedillo Martínez Jesús Everard
+Cedillo Martínez Jesús Everardo
 García González Brenda
 22-sep-2015
 **********************************/
