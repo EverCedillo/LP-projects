@@ -1,0 +1,10 @@
+ Clase : 9, valor :@bool
+ Clase : 8, valor :@int
+ Clase : 7, valor :bool
+ Clase : 6, valor :else
+ Clase : 5, valor :if
+ Clase : 4, valor :int
+ Clase : 3, valor :@sd3dd4
+ Clase : 2, valor :@ss
+ Clase : 1, valor :@holi
+ Clase : 0, valor :@holas

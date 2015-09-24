@@ -3,6 +3,7 @@
 # ifdef __cplusplus
 extern "C" {
 # endif
+#include <stdio.h>
 struct Data {
 char * val;
 int clase ;
@@ -24,6 +25,8 @@ int insert_empty ( char * val , int clase , List * list );
 int insert_head ( char * val , int clase , List * list );
 int insert_end ( char * val , int clase , List * list ) ;
 int search ( char * str , List * list );
+int get_data(char * str, List *list );
+void fprint (FILE* file, List *list);
 void empty_list ( List * list );
 void delete_nodo ( Nodo * next ) ;
 void print ( List * list );

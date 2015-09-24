@@ -1,7 +1,7 @@
 /********************************+
 Analizador léxico
 Programa 1
-Cedillo Martínez Jesús Everard
+Cedillo Martínez Jesús Everardo
 García González Brenda
 22-sep-2015
 **********************************/
@@ -89,7 +89,8 @@ int main(int argc, char const *argv[]){
 	char *buffer,c;
 	int status=0,lexic_element,pre_status,char_flag=-1,c_pos=0,c_line=1, error_flag=0;
 	FILE * file =fopen(argv[1],"r");
-	FILE* file_token=fopen("token.tk","w");
+	FILE* file_token=fopen("token.tk","w+");
+	FILE* file_symbol=fopen("symbol.st","w+");
 	buffer=(char*)malloc(sizeof(char)*2);
 	
 	if(file!=NULL){
@@ -97,7 +98,6 @@ int main(int argc, char const *argv[]){
 
 			if(char_flag){
 				c=fgetc(file);
-				//printf("%c: c_line:%d,col:%d\n",c,c_line,c_pos);
 				if(c=='\n')
 					c_line++;
 				c_pos++;
@@ -105,8 +105,7 @@ int main(int argc, char const *argv[]){
 
 			status=c==EOF?-1:status;
 			lexic_element=find(c);
-			//printf("%c,status:%d,%d-%s, char_flag:%d\n",c,status,lexic_element,buffer,char_flag);
-			
+					
 			if(lexic_element!=-1)
 				status=steps[status][lexic_element];
 			else if(c!=EOF){
@@ -118,8 +117,8 @@ int main(int argc, char const *argv[]){
 				buffer=(char*)malloc(sizeof(char)*2);
 			}
 			if(status==-1){
-				//printf("buffer:%s, pre_status: %d, status: %d, char_flag: %d\n",buffer,pre_status,status,char_flag );
-				//scanf("%d",&o);
+				
+				
 				if(cathToken(buffer,pre_status,c_pos-strlen(buffer),c_line,file_token)&&strlen(buffer)==0){
 					status=pre_status=0;
 					if(!error_flag)
@@ -128,7 +127,7 @@ int main(int argc, char const *argv[]){
 				}
 				else{
 					error_flag=char_flag=status=pre_status=0;				
-					//printf("buffer:%s, pre_status: %d, status: %d, char_flag: %d\n",buffer,pre_status,status,char_flag );
+					
 					free(buffer);
 					buffer=(char*)malloc(sizeof(char)*2);
 				}
@@ -137,15 +136,18 @@ int main(int argc, char const *argv[]){
 				strcat ( buffer , tmp2 );
 				pre_status=status;
 				char_flag=1;
-				//error_flag=0;
+				
 			}
 			c_pos=c=='\n'?0:c_pos;
 		}
 	}
 	fclose(file);
 	fclose(file_token);
+	fprint(file_symbol,&symbol_table);
+	fclose(file_symbol);
 	printf("\n/** Tabla de Simbolos **/\n");
 	print(&symbol_table);
+
 	return 0;
 }
 
@@ -183,7 +185,8 @@ devuelve:
 ************************************/
 int cathToken(char*buffer,int status, int col, int line, FILE*file){
 	struct Token t;
-	
+	int clase;
+
 	t.lexema = buffer;
 	t.col=col;
 	t.line = line;
@@ -197,9 +200,15 @@ int cathToken(char*buffer,int status, int col, int line, FILE*file){
 		case 35: //else
 		case 29: //bool
 			t.type = RESERVED_WORD;
-			fprintf(file, "Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-			printf("PALABRA RESERVADA:%d, Tipo:%d, Col:%d, Line: %d\n",id,t.type,t.col,t.line);
-			insert_begin(buffer,id++,&symbol_table);
+			if(search(buffer,&symbol_table)==-1){
+				fprintf(file, "PALABRA RESERVADA:%d, Tipo:%d, Col:%d, Line: %d\n",id,t.type,t.col,t.line);
+				printf("PALABRA RESERVADA:%d, Tipo:%d, Col:%d, Line: %d\n",id,t.type,t.col,t.line);	
+				insert_begin(buffer,id++,&symbol_table);
+			}else{
+				fprintf(file, "PALABRA RESERVADA:%d, Tipo:%d, Col:%d, Line: %d\n",get_data(buffer,&symbol_table),t.type,t.col,t.line);
+				printf("PALABRA RESERVADA:%d, Tipo:%d, Col:%d, Line: %d\n",get_data(buffer,&symbol_table),t.type,t.col,t.line);	
+			}
+			
 		break;
 		case 6: //ENTERO
 			t.type = INTEGER;
@@ -223,9 +232,14 @@ int cathToken(char*buffer,int status, int col, int line, FILE*file){
 		break;
 		case 40: //ID's
 			t.type = ID;
-			fprintf(file, "Lexema:%s, Tipo:%d, Col:%d, Line: %d\n",t.lexema,t.type,t.col,t.line);
-			printf("IDENTIFICADOR:%d, Tipo:%d, Col:%d, Line: %d\n",id,t.type,t.col,t.line);
-			insert_begin(buffer,id++,&symbol_table);
+			if(search(buffer,&symbol_table)==-1){
+				fprintf(file, "IDENTIFICADOR:%d, Tipo:%d, Col:%d, Line: %d\n",id,t.type,t.col,t.line);
+				printf("IDENTIFICADOR:%d, Tipo:%d, Col:%d, Line: %d\n",id,t.type,t.col,t.line);	
+				insert_begin(buffer,id++,&symbol_table);
+			}else{
+				fprintf(file, "IDENTIFICADOR:%d, Tipo:%d, Col:%d, Line: %d\n",get_data(buffer,&symbol_table),t.type,t.col,t.line);
+				printf("IDENTIFICADOR:%d, Tipo:%d, Col:%d, Line: %d\n",get_data(buffer,&symbol_table),t.type,t.col,t.line);	
+			}
 		break;
 		case 8:
 			t.type = ASSIGNMENT_OPERATOR;
@@ -241,14 +255,14 @@ int cathToken(char*buffer,int status, int col, int line, FILE*file){
 		break;
 		case 15:
 		case 39:
-			//ITNORE
-			//printf("ITNORE\n");
+			//IGNORE
+			
 			break;
 		case EOF:
 			printf("END OF FILE\n");
 			break;
 		default:
-			//printf("Nadiwis\n");
+			//ERROR
 			return -1;
 		return 0;
 	}

@@ -88,6 +88,27 @@ void delete_nodo ( Nodo * next ){
 	free ( next );
 }
 
+int get_data(char * str, List * list){
+	Nodo * tmp = list -> root ;
+	int pos = 0;
+	while ( tmp ){
+		if( strcmp (tmp -> data .val , str ) ==0) {
+			return tmp -> data.clase ;
+		}
+	tmp = tmp -> next ;
+	pos ++;
+	}
+	return -1;
+}
+
+void fprint (FILE* file, List *list){
+	Nodo * tmp = list -> root ;
+	if(file!=NULL){
+	while (tmp != NULL ){
+	fprintf (file," Clase : %d, valor :%s\n",tmp -> data .clase ,tmp -> data .val );
+		tmp = tmp -> next ;
+	}}
+}
 void print ( List * list ){
 	Nodo * tmp = list -> root ;
 	while (tmp != NULL ){
