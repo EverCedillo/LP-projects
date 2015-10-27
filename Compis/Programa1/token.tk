@@ -1,29 +1,29 @@
-IDENTIFICADOR:0, Tipo:1, Col:1, Line: 1
-Lexema:>, Tipo:5, Col:8, Line: 1
-Lexema:2, Tipo:6, Col:10, Line: 1
-Lexema:+, Tipo:4, Col:12, Line: 1
-Lexema:3, Tipo:6, Col:14, Line: 2
-IDENTIFICADOR:1, Tipo:1, Col:1, Line: 2
-Lexema:<=, Tipo:5, Col:7, Line: 2
-IDENTIFICADOR:2, Tipo:1, Col:15, Line: 2
-Lexema:<, Tipo:5, Col:1, Line: 4
-Lexema:2, Tipo:6, Col:3, Line: 4
-IDENTIFICADOR:3, Tipo:1, Col:5, Line: 4
-Lexema:>, Tipo:5, Col:1, Line: 5
+IDENTIFICADOR:0, Tipo:1, Col:1, Line: 2
+Lexema:>, Tipo:5, Col:8, Line: 2
+Lexema:2, Tipo:6, Col:10, Line: 2
+Lexema:+, Tipo:4, Col:12, Line: 2
+Lexema:3, Tipo:6, Col:14, Line: 3
+IDENTIFICADOR:1, Tipo:1, Col:1, Line: 3
+Lexema:<=, Tipo:5, Col:7, Line: 3
+IDENTIFICADOR:2, Tipo:1, Col:15, Line: 3
+Lexema:<, Tipo:5, Col:1, Line: 5
 Lexema:2, Tipo:6, Col:3, Line: 5
-Lexema:2, Tipo:6, Col:6, Line: 5
-Lexema:9, Tipo:6, Col:11, Line: 6
-Lexema:2, Tipo:6, Col:34, Line: 6
-PALABRA RESERVADA:4, Tipo:0, Col:36, Line: 7
-PALABRA RESERVADA:5, Tipo:0, Col:1, Line: 8
-PALABRA RESERVADA:6, Tipo:0, Col:1, Line: 8
-PALABRA RESERVADA:7, Tipo:0, Col:6, Line: 8
-PALABRA RESERVADA:7, Tipo:0, Col:11, Line: 8
-IDENTIFICADOR:8, Tipo:1, Col:17, Line: 8
-IDENTIFICADOR:9, Tipo:1, Col:22, Line: 8
-Lexema:2.3, Tipo:7, Col:28, Line: 8
-Lexema:.6, Tipo:7, Col:32, Line: 9
-IDENTIFICADOR:2, Tipo:1, Col:1, Line: 9
-Lexema:2, Tipo:6, Col:5, Line: 9
-Lexema:=, Tipo:3, Col:6, Line: 9
-Lexema:3, Tipo:6, Col:7, Line: 9
+IDENTIFICADOR:3, Tipo:1, Col:5, Line: 5
+Lexema:>, Tipo:5, Col:1, Line: 6
+Lexema:2, Tipo:6, Col:3, Line: 6
+Lexema:2, Tipo:6, Col:6, Line: 6
+Lexema:9, Tipo:6, Col:11, Line: 7
+Lexema:2, Tipo:6, Col:34, Line: 7
+PALABRA RESERVADA:4, Tipo:0, Col:36, Line: 8
+PALABRA RESERVADA:5, Tipo:0, Col:1, Line: 9
+PALABRA RESERVADA:6, Tipo:0, Col:1, Line: 9
+PALABRA RESERVADA:7, Tipo:0, Col:6, Line: 9
+PALABRA RESERVADA:7, Tipo:0, Col:11, Line: 9
+IDENTIFICADOR:8, Tipo:1, Col:17, Line: 9
+IDENTIFICADOR:9, Tipo:1, Col:22, Line: 9
+Lexema:2.3, Tipo:7, Col:28, Line: 9
+Lexema:.6, Tipo:7, Col:32, Line: 10
+IDENTIFICADOR:2, Tipo:1, Col:1, Line: 10
+Lexema:2, Tipo:6, Col:5, Line: 10
+Lexema:=, Tipo:3, Col:6, Line: 10
+Lexema:3, Tipo:6, Col:7, Line: 10
