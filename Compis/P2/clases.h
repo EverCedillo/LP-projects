@@ -50,6 +50,9 @@ union VALORES {
     int len;
 };
 int pos;
+int lineno;
+
+FILE*yyparsein;
 
 VALORES yylval ;
 

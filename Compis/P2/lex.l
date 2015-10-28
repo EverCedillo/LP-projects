@@ -15,125 +15,128 @@ real {digito}*"."{digito}+
 
 if			{yylval.sval = ( char *) realloc ( yylval.sval , yyleng * sizeof ( char ));
 			strcpy ( yylval.sval , yytext );
-			pos+=yyleng;
+			pos+=yyleng;lineno=yylineno;
 			return _IF;}
 while		{yylval.sval = ( char *) realloc ( yylval.sval , yyleng * sizeof ( char ));
-			strcpy ( yylval.sval , yytext );pos+=yyleng;
+			strcpy ( yylval.sval , yytext );pos+=yyleng;lineno=yylineno;
 			return _WHILE;}
 float		{yylval.sval = ( char *) realloc ( yylval.sval , yyleng * sizeof ( char ));
-			strcpy ( yylval.sval , yytext );pos+=yyleng;
+			strcpy ( yylval.sval , yytext );pos+=yyleng;lineno=yylineno;
 			return _FLOAT;}
 double		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return _DOUBLE;}
 char		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return _CHAR;}
 bool		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return _BOOL;}
 int			{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return _INT;}
 else		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return _ELSE;}
 true		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return _TRUE;}
 false		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return _FALSE;}
 "+=" 		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return MAS_IGU;}
 "-=" 		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return RES_IGU;}
 "*=" 		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return MUL_IGU;}
 "/=" 		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return DIV_IGU;}
 "%=" 		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return MOD_IGU;}
 "+" 		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return MAS;}
 "-" 		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return RES;}
 "*" 		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return MUL;}
 "%"  		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return MOD;}
 "/" 		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return DIV;}
 "=="		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return IGU_IGU;}
 "!="		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return DIF;}
 ">="		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return MAY_IGU;}
 "<=" 		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return MEN_IGU;}
 "<"			{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return MEN;}
 ">"			{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return MAY;}
 "="			{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return IGU;}
 ";"			{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return PYC;}
 "," 		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return COM;}
 "{"			{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return LLA;}
 "}"			{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return LLC;}
 "("			{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return PAA;}
 ")"			{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-			strcpy ( yylval .sval , yytext );pos+=yyleng;
+			strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 			return PAC;}
 {letra}+({letra}|{digito})* 	{yylval.sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
-								strcpy ( yylval .sval , yytext );pos+=yyleng;
+								strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 								return ID;}
 
-{real}[fF]  {yylval.dval = atof(yytext);pos+=yyleng;
+{real}[fF]  {yylval.dval = atof(yytext);pos+=yyleng;lineno=yylineno;
 			return NUM;}
-{real} 		{yylval.dval = atof(yytext);pos+=yyleng;
+{real} 		{yylval.dval = atof(yytext);pos+=yyleng;lineno=yylineno;
 			return NUM;}
-{entero}	{yylval.ival = atoi(yytext);pos+=yyleng;
+{entero}	{yylval.ival = atoi(yytext);pos+=yyleng;lineno=yylineno;
 			return NUM;}
-\'{digito}\'|\'{letra}\' 	{yylval.cval = yytext[0];pos+=yyleng;
+\'{digito}\'|\'{letra}\' 	{yylval.cval = yytext[0];pos+=yyleng;lineno=yylineno;
 							return CAR;}
-[ t]		{pos+=yyleng;}
+[ t]		{pos+=yyleng;lineno=yylineno;}
 \n			{pos=0;}
-.	{printf("\nError en linea %d", yylineno);pos+=yyleng;}
+.	{printf("\nError en linea %d", yylineno);pos+=yyleng;lineno=yylineno;}
 
 
 
 %%
 
-// /*
+parse_in(FILE*file){
+	yyin=file;
+}
+/*
 int main ( int argc , char ** argv ){
     if( argc > 1) {
         FILE * file ;
