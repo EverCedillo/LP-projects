@@ -1,6 +1,12 @@
+/********************************
+*Cedillo Martínez Jesús Everardo
+*García González Brenda
+*26/10/15
+*********************************/
 #include <stdio.h>
 #include <string.h>
 #include "clases.h"
+#include "linkedlist.h"
 
 /*Se definen algunos nombres de producciones
 **Las cuales son necesarias sus FIRST*/
@@ -15,6 +21,9 @@
 //Varoable global token, recibe el token actual
 int token;
 
+int id=0;
+List symbol_table;
+FILE*symbol_file;
 //Funciones que representan las producciones que definen la gramática
 void p();
 void d();
@@ -45,6 +54,7 @@ void o();
 void eat(int tok);
 void avanzar();
 void error(char*msg);
+void insert_symbol_table(char*buffer,char*tipo);
 
 FILE * lex_file;
 
@@ -64,9 +74,11 @@ int main(int argc , char ** argv) {
         parse_in(file);
     }
     lex_file=fopen("lex_analisis.txt","w+");
-    token=yylex ();
+    symbol_file=fopen("symbol_table.txt","w+");
+    avanzar();
     p();
     fclose(lex_file);
+    fclose(symbol_file);
     fclose(file);
 }
 
@@ -424,8 +436,12 @@ int isInFirst(int nombre){
 //Lee el siguiente token y actualiza el valor
 //Escribe en el archivo de análisis léxico el token encontrado
 void avanzar() {
-      fprintf(lex_file,"token: %s <%d> en posición (%d,%ld)\n",yylval.sval,token,lineno,pos-strlen(yylval.sval));
-      token= yylex();
+    token= yylex();
+    fprintf(lex_file,"token: %s <%d> en posición (%d,%ld)\n",yylval.sval,token,lineno,pos-strlen(yylval.sval));
+    if(token==ID)
+        insert_symbol_table("ID",yylval.sval);
+    if(token==_BOOL||token==_IF||token==_ELSE||token==_WHILE||token==_FLOAT||token==_INT||token==_DOUBLE||token==_CHAR||token==_TRUE||token==_FALSE)
+        insert_symbol_table("PR",yylval.sval);        
 }
 
 //Recibe un token esperado y compara con el actual
@@ -433,8 +449,7 @@ void avanzar() {
 //de análisis léxico, de lo contrario marca error
 void eat(int tok){
       if(tok==token ){
-        fprintf(lex_file,"token: %s <%d> en posición (%d,%ld)\n",yylval.sval,token,lineno,pos-strlen(yylval.sval));
-    	token=yylex( ); 
+        avanzar(); 
       } 
       else{
 	    error("token invalido");
@@ -446,5 +461,17 @@ void eat(int tok){
 void error(char*msg){
     printf("Error de sintaxis en la linea %d: %s \n",lineno,msg);
 }
+
+//Inserta en la lista que representa la tabla de símbolos
+//y escribe en el archivo de tabla de símbolos
+void insert_symbol_table(char*tipo, char*buffer){
+    printf("holi\n");
+    if(search(buffer,&symbol_table)==-1){
+		fprintf(symbol_file, "%s:%s, id:%d\n",tipo,buffer,id);
+		insert_begin(buffer,id++,&symbol_table);
+	}
+}
+
+
 
     

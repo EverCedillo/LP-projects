@@ -1103,31 +1103,33 @@ YY_RULE_SETUP
 case 38:
 YY_RULE_SETUP
 #line 132 "lex.l"
-{yylval.cval = yytext[1];pos+=yyleng;lineno=yylineno;
+{yylval.sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
+							strcpy ( yylval .sval , yytext );					
+							yylval.cval = yytext[1];pos+=yyleng;lineno=yylineno;
 							return CAR;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 134 "lex.l"
+#line 136 "lex.l"
 {pos+=yyleng;lineno=yylineno;}
 	YY_BREAK
 case 40:
 /* rule 40 can match eol */
 YY_RULE_SETUP
-#line 135 "lex.l"
+#line 137 "lex.l"
 {pos=0;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 136 "lex.l"
+#line 138 "lex.l"
 {printf("Error lexico (simbolo desconocido) en linea %d y col %d\n", yylineno,pos);pos+=yyleng;lineno=yylineno;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 140 "lex.l"
+#line 142 "lex.l"
 ECHO;
 	YY_BREAK
-#line 1131 "lex.yy.c"
+#line 1133 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2134,7 +2136,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 139 "lex.l"
+#line 141 "lex.l"
 
 
 

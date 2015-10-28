@@ -129,7 +129,9 @@ false		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( cha
 			strcpy ( yylval .sval , yytext );
 			yylval.ival =atoi(yytext);pos+=yyleng;lineno=yylineno;
 			return NUM;}
-\'{digito}\'|\'{letra}\' 	{yylval.cval = yytext[1];pos+=yyleng;lineno=yylineno;
+\'{digito}\'|\'{letra}\' 	{yylval.sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
+							strcpy ( yylval .sval , yytext );					
+							yylval.cval = yytext[1];pos+=yyleng;lineno=yylineno;
 							return CAR;}
 [ t]		{pos+=yyleng;lineno=yylineno;}
 \n			{pos=0;}
