@@ -1,8 +1,9 @@
 %{
 	#include <stdio.h>
 	#include "clases.h"
-	#include <stdlib.h>
-	# include <string.h>
+	#include <string.h>
+	
+
 %}
 
 %option noyywrap yylineno
@@ -116,18 +117,23 @@ false		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( cha
 {letra}+({letra}|{digito})* 	{yylval.sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
 								strcpy ( yylval .sval , yytext );pos+=yyleng;lineno=yylineno;
 								return ID;}
-
-{real}[fF]  {yylval.dval = atof(yytext);pos+=yyleng;lineno=yylineno;
+{real}[fF]  {yylval.sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
+			strcpy ( yylval .sval , yytext );
+			yylval.dval = atof(yytext);pos+=yyleng;lineno=yylineno;
 			return NUM;}
-{real} 		{yylval.dval = atof(yytext);pos+=yyleng;lineno=yylineno;
+{real} 		{yylval.sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
+			strcpy ( yylval .sval , yytext );
+			yylval.fval = atof(yytext);pos+=yyleng;lineno=yylineno;
 			return NUM;}
-{entero}	{yylval.ival = atoi(yytext);pos+=yyleng;lineno=yylineno;
+{entero}	{yylval.sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( char ));
+			strcpy ( yylval .sval , yytext );
+			yylval.ival =atoi(yytext);pos+=yyleng;lineno=yylineno;
 			return NUM;}
-\'{digito}\'|\'{letra}\' 	{yylval.cval = yytext[0];pos+=yyleng;lineno=yylineno;
+\'{digito}\'|\'{letra}\' 	{yylval.cval = yytext[1];pos+=yyleng;lineno=yylineno;
 							return CAR;}
 [ t]		{pos+=yyleng;lineno=yylineno;}
 \n			{pos=0;}
-.	{printf("\nError en linea %d", yylineno);pos+=yyleng;lineno=yylineno;}
+.	{printf("Error lexico (simbolo desconocido) en linea %d y col %d\n", yylineno,pos);pos+=yyleng;lineno=yylineno;}
 
 
 
@@ -136,6 +142,7 @@ false		{yylval . sval = ( char *) realloc ( yylval .sval , yyleng * sizeof ( cha
 parse_in(FILE*file){
 	yyin=file;
 }
+
 /*
 int main ( int argc , char ** argv ){
     if( argc > 1) {

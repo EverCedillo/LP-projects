@@ -1,5 +1,5 @@
-# ifndef VALOR_H
-# define VALOR_H
+# ifndef CLASES_H
+# define CLASES_H
 
 #define _IF 1
 #define _FLOAT 2
@@ -40,14 +40,13 @@
 
 
 
-typedef union VALORES VALORES ;
-union VALORES {
-    char * sval ;
-    int ival ;
+typedef struct VALORES VALORES ;
+struct VALORES {
+    int ival;
     float fval ;
     double dval ;
     char cval;
-    int len;
+    char * sval ;
 };
 int pos;
 int lineno;
@@ -55,5 +54,6 @@ int lineno;
 FILE*yyparsein;
 
 VALORES yylval ;
+
 
 # endif

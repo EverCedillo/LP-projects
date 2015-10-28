@@ -1,4 +1,7 @@
-if(segmento_violado==true){
-    lloro_como_precious();
-}else
-    soy_feliz();
+bool segmento=true;
+int holi=1;
+&
+if(0<1==1!=1.0f+223.55){
+    lloro_como_precious=true;
+}else{
+    soy_feliz=true;}
