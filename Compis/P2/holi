@@ -1,0 +1,4 @@
+if(segmento_violado==true){
+    lloro_como_precious();
+}else
+    soy_feliz();

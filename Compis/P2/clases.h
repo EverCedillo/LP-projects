@@ -30,16 +30,26 @@
 #define MUL_IGU 26
 #define DIV_IGU 27
 #define MOD_IGU 28
+#define PYC 29
+#define COM 30
+#define LLA 31
+#define LLC 32
+#define PAA 33
+#define PAC 34
+#define CAR 35
 
 
 
 typedef union VALORES VALORES ;
 union VALORES {
- char * sval ;
- int ival ;
- float fval ;
- double dval ;
+    char * sval ;
+    int ival ;
+    float fval ;
+    double dval ;
+    char cval;
+    int len;
 };
+int pos;
 
 VALORES yylval ;
 
