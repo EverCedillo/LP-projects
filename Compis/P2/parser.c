@@ -2,6 +2,8 @@
 #include <string.h>
 #include "clases.h"
 
+/*Se definen algunos nombres de producciones
+**Las cuales son necesarias sus FIRST*/
 #define DP 0
 #define SP 1
 #define SIF 2
@@ -10,8 +12,10 @@
 #define M 5
 #define H 6
 
+//Varoable global token, recibe el token actual
 int token;
 
+//Funciones que representan las producciones que definen la gramática
 void p();
 void d();
 void s();
@@ -27,7 +31,6 @@ void sif();
 void sifp();
 void swhile();
 void sasig();
-void eat(int tok);
 void h();
 void hp();
 void j();
@@ -38,29 +41,36 @@ void r();
 void q();
 void qp();
 void o();
+//Funciones auxiliares
+void eat(int tok);
 void avanzar();
 void error(char*msg);
 
 FILE * lex_file;
 
+/*Se abre el archivo fuente, se crea el archivo de 
+**volcado del análisis léxico, se lee el primer token 
+**y se llama a la primer producción*/
 int main(int argc , char ** argv) {
 
     FILE * file ;
     if( argc > 1) {
         
         file = fopen ( argv [1] , "r") ;
-        lex_file=fopen("lex_analisis.txt","w+");
         if (! file ) {
             fprintf (stderr , "No se puede abrir el archivo %s \n", argv[1]);
             return(1) ;
         }
         parse_in(file);
     }
+    lex_file=fopen("lex_analisis.txt","w+");
     token=yylex ();
     p();
     fclose(lex_file);
     fclose(file);
 }
+
+//Se llaman las producciones según indica la gramática
 void p(){
     printf("P -> DS\n");
     d();
@@ -159,7 +169,7 @@ void s(){
     sp();
 }
 void sp(){
-    while(isInFirst(SP,token)){
+    while(isInFirst(SP)){
         printf("S' -> N'\n");
         n();
     }
@@ -167,15 +177,15 @@ void sp(){
 }
 
 void n(){
-    if(isInFirst(SIF,token)){
+    if(isInFirst(SIF)){
         printf("N -> SIF\n");
         sif();
     }
-    else if(isInFirst(SWHILE,token)){
+    else if(isInFirst(SWHILE)){
         printf("N -> SWHILE\n");
         swhile();
     }
-    else if(isInFirst(SASIG,token)){
+    else if(isInFirst(SASIG)){
         printf("N -> SASIG\n");
         sasig();
         eat(PYC);
@@ -323,7 +333,7 @@ void mp(){
         avanzar();
         q();
         mp();
-    }else if(isInFirst(H,token)){
+    }else if(isInFirst(H)){
         printf("M -> H");
         h();
     }else
@@ -386,7 +396,10 @@ void r(){
     }
 }
 
-int isInFirst(int nombre,int token){
+//Recibe el nombre de la función
+//Devuelve 1 si el token actual existe dentro de su First
+//Devuelve 0 si el token actual no está dentro de su First
+int isInFirst(int nombre){
     switch(nombre){
         case DP:
             return token==_INT||token==_FLOAT||token==_DOUBLE||token==_CHAR||token==_BOOL?1:0;
@@ -408,10 +421,16 @@ int isInFirst(int nombre,int token){
         break;
     }
 }
+//Lee el siguiente token y actualiza el valor
+//Escribe en el archivo de análisis léxico el token encontrado
 void avanzar() {
       fprintf(lex_file,"token: %s <%d> en posición (%d,%ld)\n",yylval.sval,token,lineno,pos-strlen(yylval.sval));
       token= yylex();
 }
+
+//Recibe un token esperado y compara con el actual
+//De ser iguales los token lee el siguiente token escribe el archivo
+//de análisis léxico, de lo contrario marca error
 void eat(int tok){
       if(tok==token ){
         fprintf(lex_file,"token: %s <%d> en posición (%d,%ld)\n",yylval.sval,token,lineno,pos-strlen(yylval.sval));
@@ -421,6 +440,9 @@ void eat(int tok){
 	    error("token invalido");
       }
 }
+
+//Subrutina de error
+//Revibe el mensaje que indica qué provocó el error
 void error(char*msg){
     printf("Error de sintaxis en la linea %d: %s \n",lineno,msg);
 }
