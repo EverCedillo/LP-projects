@@ -86,6 +86,8 @@ struct		{return reserved_word(yytext, yylineno, yyleng,STRUCT);}
 
 \'{charset}\'			 	{return save_var(yytext,yylineno,yyleng,CAR);}
 \"{charset}*\"				{return save_var(yytext,yylineno,yyleng,CAD);}
+"/*"([^*]|\*+[^*/])*\*+"/" {pos+=yyleng;lineno=yylineno;}
+"//"[^\n]*	{pos+=yyleng;lineno=yylineno;}
 
 [ t]		{pos+=yyleng;lineno=yylineno;}
 \n			{pos=0;}

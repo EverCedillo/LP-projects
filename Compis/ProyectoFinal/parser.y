@@ -155,8 +155,7 @@ sent		:s_exp
 			|s_return
 			|bloque
 			|s_print	
-			|s_scan
-			|error;
+			|s_scan;
 s_exp		:exp PYC
 			|PYC;
 s_if		:IF PAA exp PAC sent s_else;
@@ -178,7 +177,7 @@ s_print		:PRINT PAA exp PAC PYC;
 s_scan		:SCAN PAA ID PAC;
 s_return	:RETURN PYC 
 			|RETURN exp;
-exp			:var o_asig exp
+exp			:var o_asig exp|error
 			|e_simple;
 o_asig		:IGU
 			|MAS_IGU
@@ -232,7 +231,7 @@ l_arg		:l_arg COM exp
 extern FILE *yyin;
 
 void yyerror(char *s){
-	fprintf(stderr,"%s en linea %d y columna %d\n", s,lineno,pos);
+	fprintf(stderr,"%s token no esperado en linea %d y columna %d\n", s,lineno,pos);
 	return;
 }
 
