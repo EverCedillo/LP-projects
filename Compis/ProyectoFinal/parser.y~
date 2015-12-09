@@ -1,0 +1,53 @@
+%{
+#include <stdio.h>
+#include <math.h>
+void yyerror(char *s);
+%}
+
+%union{
+	double dval;
+}
+
+
+%token NL 
+%token <dval> NUM
+
+%left '+' '-'
+%left '*' '/'
+
+%start exp
+
+%%
+
+/*Gramar Section*/
+
+exp : NUM
+	| exp '+' exp
+	| exp '-' exp
+	| exp '*' exp
+	| exp '/' exp
+	| '(' exp ')';
+
+%%
+
+extern FILE *yyin;
+
+void yyerror(char *s){
+	fprintf(stderr,"%s\n", s);
+	return;
+}
+
+
+int main(int argc, char *argv[]){
+	if(argc==2){
+		yyin = fopen(argv[1], "rt");
+		if(yyin == NULL){
+			printf("El fichero %s no se puede abrir\n", argv[1]);
+			exit(1);
+		}
+	}
+	yyparse();
+	return 0;
+}
+
+

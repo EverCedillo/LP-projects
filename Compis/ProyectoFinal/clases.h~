@@ -62,8 +62,6 @@
 #define OR 52
 #define AND 53
 #define NOT 54
-#define NUM_D 55
-#define
 
 
 //Estructura para yylval, donde se almacena el valor

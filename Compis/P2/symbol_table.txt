@@ -1,0 +1,9 @@
+PR:bool, id:0
+ID:segmento, id:1
+PR:true, id:2
+PR:int, id:3
+ID:holi, id:4
+PR:if, id:5
+ID:lloro_como_precious, id:6
+PR:else, id:7
+ID:soy_feliz, id:8

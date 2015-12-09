@@ -62,12 +62,16 @@
 #define OR 52
 #define AND 53
 #define NOT 54
-#define NUM_D 55
-#define
+#define MAS_MAS 55
+#define RES_RES 56
+#define DPT 57
+#define PT 58
 
+/*
 
 //Estructura para yylval, donde se almacena el valor
 //y nombre de los token
+
 typedef struct VALORES VALORES ;
 struct VALORES {
     int ival;
@@ -76,13 +80,16 @@ struct VALORES {
     char cval;
     char * sval ;
 };
+
+
 // Variables globales de control de posición en archivo fuente
-int pos;
-int lineno;
+
+VALORES yylval;*/
 
 //Apuntador de entrada para yylex() y creación de yylval
-FILE*yyparsein;
-VALORES yylval ;
 
+
+int pos;
+int lineno;
 
 # endif

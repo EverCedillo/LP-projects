@@ -21,6 +21,7 @@
 //Varoable global token, recibe el token actual
 int token;
 
+//Variables para generar la tabla de símobolos
 int id=0;
 List symbol_table;
 FILE*symbol_file;
@@ -465,7 +466,6 @@ void error(char*msg){
 //Inserta en la lista que representa la tabla de símbolos
 //y escribe en el archivo de tabla de símbolos
 void insert_symbol_table(char*tipo, char*buffer){
-    printf("holi\n");
     if(search(buffer,&symbol_table)==-1){
 		fprintf(symbol_file, "%s:%s, id:%d\n",tipo,buffer,id);
 		insert_begin(buffer,id++,&symbol_table);
