@@ -23,11 +23,10 @@ while		{return reserved_word(yytext, yylineno, yyleng,WHILE);}
 float		{return reserved_word(yytext, yylineno, yyleng,FLOAT);}
 double		{return reserved_word(yytext, yylineno, yyleng,DOUBLE);}
 char		{return reserved_word(yytext, yylineno, yyleng,CHAR);}
-bool		{return reserved_word(yytext, yylineno, yyleng,BOOL);}
+
 int			{return reserved_word(yytext, yylineno, yyleng,INT);}
 else		{return reserved_word(yytext, yylineno, yyleng,ELSE);}
-true		{return reserved_word(yytext, yylineno, yyleng,_TRUE);}
-false		{return reserved_word(yytext, yylineno, yyleng,_FALSE);}
+
 void		{return reserved_word(yytext, yylineno, yyleng,VOID);}
 for			{return reserved_word(yytext, yylineno, yyleng,FOR);}
 case		{return reserved_word(yytext, yylineno, yyleng,CASE);}

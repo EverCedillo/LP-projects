@@ -8,6 +8,8 @@ extern int pos;
 extern int lineno;
 
 
+
+
 void yyerror(char *s);
 %}
 
@@ -99,7 +101,9 @@ void yyerror(char *s);
 %right IGU MAS_IGU RES_IGU DIV_IGU MUL_IGU MOD_IGU
 
 %start program
-%define parse.error verbose
+
+
+
 %%
 
 /*Gramar Section*/
@@ -110,7 +114,7 @@ l_decl	 	:l_decl decl
 decl		:decl_var
 			|decl_fun
 			|t_struct;
-decl_var	:type l_var PYC;
+decl_var	:type l_var PYC|error;
 l_var		:l_var COM l
 			|l;
 l			:ID arr;
@@ -151,7 +155,8 @@ sent		:s_exp
 			|s_return
 			|bloque
 			|s_print	
-			|s_scan;
+			|s_scan
+			|error;
 s_exp		:exp PYC
 			|PYC;
 s_if		:IF PAA exp PAC sent s_else;
@@ -227,7 +232,7 @@ l_arg		:l_arg COM exp
 extern FILE *yyin;
 
 void yyerror(char *s){
-	fprintf(stderr,"%s en %d\n", s,lineno);
+	fprintf(stderr,"%s en linea %d y columna %d\n", s,lineno,pos);
 	return;
 }
 

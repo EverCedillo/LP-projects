@@ -1,13 +1,13 @@
 
-int holi;
-&&
+int holi &&;
+
 void hol(void){
-if(0<1==11.0f+223.55){
-    lloro_como_precious=1;
+if(0<1==11.0f+223.55&&){
+    lloro_como_precious=true;#
 }else{
-    soy_feliz=true;}
+    soy_feliz=0;}
 for(1;1;i++){
-s
+
 }
 return;
 }
